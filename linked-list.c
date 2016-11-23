@@ -64,6 +64,27 @@ void append(struct node** head_ref,int new_data){
 
 }
 
+void deleteNode(struct node **head_ref,int  key){
+
+	struct node* temp = *head_ref,*prev;
+	if(temp!= NULL && temp->data == key){
+		*head_ref = temp->next;
+		free(temp);
+		return;
+	}
+
+	while(temp!=NULL && temp->data != key){
+		prev = temp;
+		temp = temp->next;
+	}
+
+	if(temp == NULL) return;
+
+	prev->next = temp->next;
+	free(temp);
+
+}
+
 int getNth(struct node* head , int index){
 	struct node* current = head;
 	int count = 0;
@@ -97,6 +118,9 @@ int main(){
   insertAfter(head->next, 8);
  
   printf("\n Created Linked list is: ");
+  printList(head);
+  deleteNode(&head, 1);
+  puts("\nLinked List after Deletion of 1: ");
   printList(head);
  
   return 0;
