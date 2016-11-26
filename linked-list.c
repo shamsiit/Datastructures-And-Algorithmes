@@ -85,6 +85,33 @@ void deleteNode(struct node **head_ref,int  key){
 
 }
 
+void deleteNodeByPosition(struct node **head_ref,int position){
+
+	if(*head_ref == NULL) return;
+
+	struct node* temp = *head_ref;
+	if(position == 0){
+		*head_ref = temp->next;
+		free(temp);
+		return;
+	}
+
+	int i;
+
+	for(i=0;temp!=NULL&&i<position-1;i++){
+		temp = temp->next;
+	}
+
+	if(temp == NULL || temp->next==NULL) return;
+
+	struct node *next = temp->next->next;
+
+	free(temp->next);
+
+	temp->next = next;
+
+}
+
 int getNth(struct node* head , int index){
 	struct node* current = head;
 	int count = 0;
@@ -102,7 +129,7 @@ int getNth(struct node* head , int index){
 int main(){
 	struct node* head = NULL;
  
-  // Insert 6.  So linked list becomes 6->NULL
+  /*// Insert 6.  So linked list becomes 6->NULL
   append(&head, 6);
  
   // Insert 7 at the beginning. So linked list becomes 7->6->NULL
@@ -121,7 +148,19 @@ int main(){
   printList(head);
   deleteNode(&head, 1);
   puts("\nLinked List after Deletion of 1: ");
-  printList(head);
+  printList(head);*/
+
+	push(&head, 7);
+    push(&head, 1);
+    push(&head, 3);
+    push(&head, 2);
+    push(&head, 8);
+ 
+    puts("Created Linked List: ");
+    printList(head);
+    deleteNodeByPosition(&head, 4);
+    puts("\nLinked List after Deletion at position 4: ");
+    printList(head);
  
   return 0;
 }
